@@ -1,10 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.6;
 
-import "Context.sol";
-import "IERC20.sol";
-import "SafeMath.sol";
-import "Address.sol";
+import "https://github.com/SmartBlueSukukToken/SmartBlueSukuk/blob/3e740877fdf18f4cbc6e0bbc0d1076c68ef702c2/SafeMath.sol";
+import "https://github.com/SmartBlueSukukToken/SmartBlueSukuk/blob/3e740877fdf18f4cbc6e0bbc0d1076c68ef702c2/Address.sol";
+
 
 contract Ownable {
     address public owner;
@@ -30,7 +29,6 @@ contract Ownable {
     }
 
     // CONSTRUCTORS
-
     /**
     * The Ownable constructor sets the original `owner` of the contract to the sender
     * account.
@@ -57,6 +55,84 @@ contract Ownable {
     event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);
 }
 
+ /*
+ *Provides information about the current execution context, including the
+ * sender of the transaction and its data.
+ */
+ 
+abstract contract Context {
+    function _msgSender() internal view virtual returns (address payable) {
+    return payable(msg.sender); // added payable
+    }
+
+    function _msgData() internal view virtual returns (bytes memory) {
+        this; // silence state mutability warning without generating bytecode 
+        return msg.data;
+    }
+}
+
+
+/**
+ *Interface of the ERC20 standard as defined in the EIP.
+ */
+interface IERC20 {
+    /**
+     * Returns the amount of tokens in existence.
+     */
+    function totalSupply() external view returns (uint256);
+
+    /**
+     * Returns the amount of tokens owned by `account`.
+     */
+    function balanceOf(address account) external view returns (uint256);
+
+    /**
+     *Moves `amount` tokens from the caller's account to `recipient`.
+     * Returns a boolean value indicating whether the operation succeeded.
+     * Emits a {Transfer} event.
+     */
+    function transfer(address recipient, uint256 amount) external returns (bool);
+
+    /**
+     *Returns the remaining number of tokens that `spender` will be
+     * allowed to spend on behalf of `owner` through {transferFrom}. This is
+     * zero by default.
+     * This value changes when {approve} or {transferFrom} are called.
+     */
+    function allowance(address owner, address spender) external view returns (uint256);
+
+    /**
+     * Sets `amount` as the allowance of `spender` over the caller's tokens.
+     * Returns a boolean value indicating whether the operation succeeded.
+     * Emits an {Approval} event.
+     */
+    function approve(address spender, uint256 amount) external returns (bool);
+
+    /**
+     * Moves `amount` tokens from `sender` to `recipient` using the
+     * allowance mechanism. `amount` is then deducted from the caller's
+     * allowance.
+     *
+     * Returns a boolean value indicating whether the operation succeeded.
+     *
+     * Emits a {Transfer} event.
+     */
+    function transferFrom(address sender, address recipient, uint256 amount) external returns (bool);
+
+    /**
+     * Emitted when `value` tokens are moved from one account (`from`) to
+     * another (`to`).
+     * Note that `value` may be zero.
+     */
+    event Transfer(address indexed from, address indexed to, uint256 value);
+
+    /**
+     * Emitted when the allowance of a `spender` for an `owner` is set by
+     * a call to {approve}. `value` is the new allowance.
+     */
+    event Approval(address indexed owner, address indexed spender, uint256 value);
+}
+
 contract ERC20 is Context, Ownable, IERC20 {
     using SafeMath for uint256;
     using Address for address;
@@ -70,9 +146,9 @@ contract ERC20 is Context, Ownable, IERC20 {
     string private _name;
     string private _symbol;
     string private _version;
-    uint8 private _decimals
+    uint8 private _decimals;
      
-    constructor (string memory name, string memory symbol) public {
+    constructor (string memory name, string memory symbol, string memory version) public {
         _name = name;
         _symbol = symbol;
         _version = version;
