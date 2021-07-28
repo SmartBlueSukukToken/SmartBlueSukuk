@@ -66,7 +66,7 @@ contract Ownable {
 
     // MODIFIERS
 
-    /// @dev Throws if called by any account other than the owner.
+    /// dev Throws if called by any account other than the owner.
     modifier onlyOwner() {
         require(msg.sender == owner, "Only Owner");
         _;
@@ -140,7 +140,6 @@ contract SmartBlueSukukToken is ERC20Interface, Context, Ownable, SafeMath  {
     string public symbol;
     string public version;
     uint8 public decimals;
-
     uint public _totalSupply;
     
     mapping(address => uint) balances;
@@ -150,12 +149,11 @@ contract SmartBlueSukukToken is ERC20Interface, Context, Ownable, SafeMath  {
     // Constructor
     // ------------------------------------------------------------------------
     constructor() {
-        name = "SmartBlueSukukToken";
         symbol = "SBST";
+        name = "SmartBlueSukukToken";
         version = "0.0.1";
         decimals = 18;
         _totalSupply = 100000000000000000000000000;
-
         balances[0xfCc68f72a9B81B2Cb2c8D3C2AC899B42Be2F2307] = _totalSupply;
         emit Transfer(address(0), 0xfCc68f72a9B81B2Cb2c8D3C2AC899B42Be2F2307, _totalSupply);
     }
@@ -164,7 +162,7 @@ contract SmartBlueSukukToken is ERC20Interface, Context, Ownable, SafeMath  {
     // Total supply
     // ------------------------------------------------------------------------
     function totalSupply() public override view returns (uint) {
-        return _totalSupply  - balances[address(0)];
+        return _totalSupply - balances[address(0)];
     }
     
     
