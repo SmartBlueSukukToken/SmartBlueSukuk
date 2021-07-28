@@ -164,7 +164,7 @@ contract SmartBlueSukukToken is ERC20Interface, Context, Ownable, SafeMath  {
     // Total supply
     // ------------------------------------------------------------------------
     function totalSupply() public override view returns (uint) {
-        return _totalSupply  - balances[address(0)];
+        return _totalSupply - balances[address(0)];
     }
     
     
