@@ -141,7 +141,7 @@ contract SmartBlueSukukToken is ERC20Interface, Context, Ownable, SafeMath  {
     string public version;
     uint8 public decimals;
 
-    uint256 public _totalSupply;
+    uint public _totalSupply;
     
     mapping(address => uint) balances;
     mapping(address => mapping(address => uint)) allowed;
