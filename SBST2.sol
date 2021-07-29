@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.6;
 
-import "https://github.com/SmartBlueSukukToken/SmartBlueSukuk/blob/3e740877fdf18f4cbc6e0bbc0d1076c68ef702c2/Address.sol";
-import "https://github.com/SmartBlueSukukToken/SmartBlueSukuk/blob/b5b37076f0bf3f1e4f83d7dd48b44f33d7fa0b5e/Ownable.sol";
-import "https://github.com/SmartBlueSukukToken/SmartBlueSukuk/blob/81d5be267f43178586115b831ac2856ee40e66e2/Context.sol";
+import "Address.sol";
+import "Ownable.sol";
+import "Context.sol";
 // ----------------------------------------------------------------------------
 // 'SmartBlueSukuk' token contract
 //
