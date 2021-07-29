@@ -83,7 +83,7 @@ contract SmartBlueSukukToken is ERC20Interface, SafeMath, Context, Ownable  {
     constructor() {
         name = "SmartBlueSukukToken";
         symbol = "SBST";
-        version = "0.0.1";
+        version = "0.0.2";
         decimals = 18;
         _totalSupply = 100000000000000000000000000;
 
