@@ -2,7 +2,8 @@
 pragma solidity ^0.8.6;
 
 import "Address.sol";
-
+import "Ownable.sol";
+import "Context.sol";
 // ----------------------------------------------------------------------------
 // 'SmartBlueSukuk' token contract
 //
@@ -11,6 +12,27 @@ import "Address.sol";
 // Name        : SmartBlueSukukToken
 // Decimals    : 18
 // (c) by Lise Demay and Sean Ng. 
+
+// ----------------------------------------------------------------------------
+// ERC Token Standard #20 Interface
+// ----------------------------------------------------------------------------
+
+abstract contract ERC20Interface {
+    function totalSupply() virtual public view returns (uint);
+    function balanceOf(address tokenOwner) virtual public view returns (uint balance);
+    function allowance(address tokenOwner, address spender) virtual public view returns (uint remaining);
+    function transfer(address to, uint tokens) virtual public returns (bool success);
+    function approve(address spender, uint tokens) virtual public returns (bool success);
+    function transferFrom(address from, address to, uint tokens) virtual public returns (bool success);
+
+    event Transfer(address indexed from, address indexed to, uint tokens);
+    event Approval(address indexed tokenOwner, address indexed spender, uint tokens);
+}
+
+//Contract function to receive approval and execute function in one call
+abstract contract ApproveAndCallFallBack {
+    function receiveApproval(address from, uint256 tokens, address token, bytes memory data) virtual public;
+}
 
 // ----------------------------------------------------------------------------
 // Safe Math Library
@@ -33,95 +55,6 @@ contract SafeMath {
     function div(uint a, uint b) public pure returns (uint c) {
         require(b > 0);
         c = a / b;
-    }
-}
-
-// ----------------------------------------------------------------------------
-// ERC Token Standard #20 Interface
-//
-// ----------------------------------------------------------------------------
-
-abstract contract ERC20Interface {
-    function totalSupply() virtual public view returns (uint);
-    function balanceOf(address tokenOwner) virtual public view returns (uint balance);
-    function allowance(address tokenOwner, address spender) virtual public view returns (uint remaining);
-    function transfer(address to, uint tokens) virtual public returns (bool success);
-    function approve(address spender, uint tokens) virtual public returns (bool success);
-    function transferFrom(address from, address to, uint tokens) virtual public returns (bool success);
-
-    event Transfer(address indexed from, address indexed to, uint tokens);
-    event Approval(address indexed tokenOwner, address indexed spender, uint tokens);
-}
-
-//Contract function to receive approval and execute function in one call
- 
-abstract contract ApproveAndCallFallBack {
-    function receiveApproval(address from, uint256 tokens, address token, bytes memory data) virtual public;
-}
-
-// ----------------------------------------------------------------------------
-// Ownable contract
-// ----------------------------------------------------------------------------
-contract Ownable {
-    address public owner;
-    address public newOwner;
-
-    // MODIFIERS
-
-    /// Throws if called by any account other than the owner.
-    modifier onlyOwner() {
-        require(msg.sender == owner, "Only Owner");
-        _;
-    }
-
-    /// Throws if called by any account other than the new owner.
-    modifier onlyNewOwner() {
-        require(msg.sender == newOwner, "Only New Owner");
-        _;
-    }
-
-    modifier notNull(address _address) {
-        require(_address != address(0),"address is Null");
-        _;
-    }
-
-    // CONSTRUCTORS
-
-    //
-    // The Ownable constructor sets the original `owner` of the contract to the sender account.
-    //
-    
-    constructor() {
-        owner = msg.sender;
-    }
-
-    //Allows the current owner to transfer control of the contract to a newOwner.
-    function transferOwnership(address _newOwner) public notNull(_newOwner) onlyOwner {
-        newOwner = _newOwner;
-    }
-
-    /// Allows the new owner to claim ownership and so proving that the newOwner is valid.
-    function acceptOwnership() public onlyNewOwner {
-        address oldOwner = owner;
-        owner = newOwner;
-        newOwner = address(0);
-        emit OwnershipTransferred(oldOwner, owner);
-    }
-
-    // EVENTS
-    
-    event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);
-}
-
-///Provides information about the current execution context, including the sender of the transaction and its data.
-abstract contract Context {
-    function _msgSender() internal view virtual returns (address payable) {
-    return payable(msg.sender); // added payable
-    }
-
-    function _msgData() internal view virtual returns (bytes memory) {
-        this; // silence state mutability warning without generating bytecode 
-        return msg.data;
     }
 }
 
