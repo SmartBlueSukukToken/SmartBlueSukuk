@@ -9,7 +9,6 @@ contract Ownable {
     address public newOwner;
 
     // MODIFIERS
-
     /// Throws if called by any account other than the owner.
     modifier onlyOwner() {
         require(msg.sender == owner, "Only Owner");
@@ -26,12 +25,8 @@ contract Ownable {
         require(_address != address(0),"address is Null");
         _;
     }
-
-    // CONSTRUCTORS
-
-    //
+    
     // The Ownable constructor sets the original `owner` of the contract to the sender account.
-    //
     
     constructor() {
         owner = msg.sender;
@@ -49,8 +44,6 @@ contract Ownable {
         newOwner = address(0);
         emit OwnershipTransferred(oldOwner, owner);
     }
-
-    // EVENTS
     
     event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);
 }
